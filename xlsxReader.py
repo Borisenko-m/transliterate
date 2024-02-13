@@ -44,5 +44,5 @@ def translitXLSXFile(file):
 
     writer.writerows(table)
 
-def translitJSONFile(str):
+def translitJSON(str):
     return tr.FnTranslit(str)

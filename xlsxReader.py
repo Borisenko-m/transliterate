@@ -1,17 +1,23 @@
 import csv
-#import sys
-#sys.path.append("C:\\Users\\davil\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python311\\site-packages")
-#import openpyxl
-#opxl = openpyxl
-import tkinter as tk
-from tkinter import filedialog
+#import openpyxl as xl
+
 import trans as tr
 
-def translitCSVFile(file):
+def replaceName(name: str):
+    return f'{name.removesuffix('.csv')}_transliterated.csv'
+
+def translitText(name: str, data: str):
+    data = tr.FnTranslit(data)
+    fw = open(replaceName(name), 'w', newline='')
+    fw.write(data)
+    fw.close()
+
+
+def translitCSVFile(name: str, file: list):
     
-    fw = open('_transliterated.csv', 'w', newline='')
-    reader = csv.reader(file,delimiter=';')
-    writer = csv.writer(fw,delimiter=';')
+    fw = open(replaceName(name), 'w', newline='')
+    reader = csv.reader(file, delimiter=';')
+    writer = csv.writer(fw, delimiter=';')
     brow = list()
     table = list()
     i = 0
@@ -24,6 +30,7 @@ def translitCSVFile(file):
         brow = list()
 
     writer.writerows(table)
+    return "ok"
 
 
 def translitXLSXFile(file):

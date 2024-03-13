@@ -5,6 +5,7 @@ import xlsxReader
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import HTMLResponse 
 import uvicorn 
+from typing import List
 
 app = FastAPI()
 class Api(object):
@@ -13,7 +14,7 @@ class Api(object):
         self.app = app
     
     @app.post("/api/translitCSVFile/")
-    async def api_translitCSVFile(files: list[UploadFile]):
+    async def api_translitCSVFile(files: List[UploadFile]):
 
         encoding: str = ""
         lines = list()
@@ -30,13 +31,14 @@ class Api(object):
     
     # Not implemented:
     @app.post("/api/translitXLSXFile/")
-    async def api_translitXLSXFile(files: list[UploadFile]):
-
+    async def api_translitXLSXFile(files: List[UploadFile]):
+        
         encoding: str = ""
         lines = list()
 
         for file in files: 
             for line in file.file.readlines():
+                print(line)
                 if encoding == "": 
                     encoding = encoding = chardet.detect(line)['encoding']
                 
@@ -63,7 +65,7 @@ class Api(object):
         content = ''
         for method in dir(Api(app)):
             if method.startswith('api_'):
-                content += ''.join(showMethod('api/' + method.removeprefix('api_')))
+                content += ''.join(showMethod('api/' + method.lstrip('api_')))
         
         return HTMLResponse(f"<body>{content}</body>")
 

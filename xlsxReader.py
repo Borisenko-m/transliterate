@@ -4,7 +4,7 @@ import csv
 import trans as tr
 
 def replaceName(name: str):
-    return f'{name.removesuffix('.csv')}_transliterated.csv'
+    return f'{name.lstrip(".csv")}_transliterated.csv'
 
 def translitText(name: str, data: str):
     data = tr.FnTranslit(data)
